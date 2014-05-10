@@ -1,5 +1,5 @@
 var common = {},
-    words = [],
+    words = {},
     currentWord,
     lastWord,
     querying = false,
@@ -30,8 +30,17 @@ function processWords() {
 
 
 function getLastWord(string) {
-  var words = string.split(' ');
-  return words[words.length - 2];
+  var list = string.split(' ');
+  if(isCapitalized(list[list.length - 2]) && isCapitalized(list[list.length - 3])) {
+    return list[list.length - 3] + ' ' + list[list.length - 2];
+  } else {
+    return list[list.length - 2];
+  }
+}
+
+
+function isCapitalized(word) {
+  return word && word[0] === word[0].toUpperCase();
 }
 
 
@@ -41,19 +50,34 @@ function checkLastWord(word) {
 
 
 function searchWord(word) {
-  querying = true;
-  setTimeout(queryDone, 1000);
-  $.getJSON('http://en.wikipedia.org/w/api.php?action=query&list=allimages&ailimit=1&aifrom=' + word + '&aiprop=dimensions%7Cmime%7Curl&format=json&callback=?')
-    .done(function(results) {
-      if(results.query.allimages.length) {
-        currentWord = word;
-        var imageUrl = results.query.allimages[0].url;
-        $('#result .image').html($('<img>')
-            .attr('src', imageUrl));
+  if(words[word]) {
+    displayWord(word, words[word]);
+  } else {
+    querying = true;
+    setTimeout(queryDone, 1000);
+    $.getJSON('http://en.wikipedia.org/w/api.php?action=query&list=allimages&ailimit=5&aifrom=' + word + '&aiprop=dimensions%7Cmime%7Curl&format=json&callback=?')
+      .done(function(results) {
+        if(results.query.allimages.length) {
+          var largestImage = _.max(_.filter(results.query.allimages, function(i) {
+            return i.mime.indexOf('image') != -1;
+          }), function(i) {
+            return i.size;
+          });
+          
+          currentWord = word;
+          words[word] = largestImage.url;
+          displayWord(word, largestImage.url);
+        }
+      });
+  }
+}
 
-        $('#result .word').text(word);
-      }
-    });
+
+function displayWord(word, imageUrl) {
+  $('#result .image').html($('<img>')
+      .attr('src', imageUrl));
+
+  $('#result .word').text(word);
 }
 
 
