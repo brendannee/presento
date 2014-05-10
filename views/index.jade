@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 Presento
+  textarea#text(placeholder="Enter text here to start")
+
+  #intro
+    h2 Welcome to Presento
+    p  Presento listens to what you say, and finds images of things you mention as you say them from Wikipedia.
+    p To enable on OS X:
+    ul
+      li Open "Dictation & Speech" in System Preferences
+      li Click "On" to turn Dictation on
+      li Select the text field above
+      li Press the fn (Function) key twice, or choose Edit > Start Dictation
+      li Start talking and see what happens
+
+  #result
+    .image
+    .word &nbsp;
