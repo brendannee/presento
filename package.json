@@ -1,7 +1,11 @@
 {
   "name": "presento",
-  "version": "0.0.1",
-  "private": true,
+  "description": "Autogenerate presentations as you talk",
+  "author": {
+    "name": "Brendan Nee",
+    "email": "me@bn.ee"
+  },
+  "version": "0.1.0",
   "dependencies": {
     "body-parser": "~1.14.1",
     "common-words": "~0.1.3",
@@ -11,7 +15,18 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1"
   },
+  "keywords": [
+    "presentations"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brendannee/presento.git"
+  },
   "scripts": {
     "start": "node ./bin/www"
   },
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  }]
 }
