@@ -15,6 +15,9 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1"
   },
+  "engines": {
+    "node": "8.1.4"
+  },
   "keywords": [
     "presentations"
   ],
