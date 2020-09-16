@@ -55,7 +55,7 @@ function searchWord(word) {
   } else {
     querying = true;
     setTimeout(queryDone, 1000);
-    $.getJSON('http://en.wikipedia.org/w/api.php?action=query&list=allimages&ailimit=5&aifrom=' + word + '&aiprop=dimensions%7Cmime%7Curl&format=json&callback=?')
+    $.getJSON('https://en.wikipedia.org/w/api.php?action=query&list=allimages&ailimit=5&aifrom=' + word + '&aiprop=dimensions%7Cmime%7Curl&format=json&callback=?')
       .done(function(results) {
         if(results.query.allimages.length) {
           var largestImage = _.max(_.filter(results.query.allimages, function(i) {
